@@ -1,5 +1,5 @@
 import { apiUrl, handleResponse, handleError } from "./apiUtils";
-import { Task } from "../models/task";
+import { ITask } from "../models/task";
 
 const baseUrl = apiUrl + "Task/";
 
@@ -9,28 +9,22 @@ export function getTasks() {
     .catch(handleError);
 }
 
-export function addTask(task: Task) {
+export function addTask(task: ITask) {
   return fetch(baseUrl, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(task),
-  })
-    .then(handleResponse)
-    .catch(handleError);
+  }).catch(handleError);
 }
 
-export function editTask(task: Task) {
+export function editTask(task: ITask) {
   return fetch(baseUrl + task.id, {
     method: "PUT",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(task),
-  })
-    .then(handleResponse)
-    .catch(handleError);
+  }).catch(handleError);
 }
 
 export function deleteTask(taskId: number) {
-  return fetch(baseUrl + taskId, { method: "DELETE" })
-    .then(handleResponse)
-    .catch(handleError);
+  return fetch(baseUrl + taskId, { method: "DELETE" }).catch(handleError);
 }

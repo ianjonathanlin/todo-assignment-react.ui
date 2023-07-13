@@ -1,9 +1,9 @@
-export interface Task {
-  id: number;
+export interface ITask {
+  id?: number;
   title: string;
-  description: string;
-  dueDate: string;
   category: string;
-  created: string;
-  updated: string;
+  description: string | undefined;
+  dueDate: string;
+  created?: string;
+  updated?: string;
 }
