@@ -2,21 +2,23 @@ import { IUser } from "../models/user";
 import { IAuthToken } from "../models/authToken";
 import { apiUrl } from "./env";
 
+const axios = require("axios").default;
+
 const baseUrl = apiUrl + "Authentication/";
 
 export function register(newUser: IUser) {
-  return fetch(baseUrl + "register", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(newUser),
+  return axios.post(baseUrl + "register", JSON.stringify(newUser), {
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }
 
 export function authenticate(user: IUser) {
-  return fetch(baseUrl + "authenticate", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(user),
+  return axios.post(baseUrl + "authenticate", JSON.stringify(user), {
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }
 
@@ -26,9 +28,9 @@ export function refreshToken() {
     refreshToken: localStorage.getItem("refreshToken")!,
   };
 
-  return fetch(baseUrl + "refresh-token", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(credentials),
+  return axios.post(baseUrl + "refresh-token", JSON.stringify(credentials), {
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }

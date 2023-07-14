@@ -19,34 +19,25 @@ export default function Main() {
   useEffect(() => {
     if (isLogin) {
       setLoading(true);
-      taskApi
-        .getTasks()
-        .then((response) => {
-          if (!response.ok) {
-            return response.text().then((text) => {
-              let err = new Error(text);
-              throw err;
-            });
-          } else {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          data.sort(function (a: ITask, b: ITask) {
-            return a.id! - b.id!;
-          });
-          setTasks(data!);
-        })
-        .catch((err) =>
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: err.message,
-          })
-        );
+      getTasks();
     }
     setLoading(false);
   }, [loading, isLogin]);
+
+  async function getTasks() {
+    await taskApi
+      .getTasks()
+      .then((res: any) => {
+        setTasks(res.data);
+      })
+      .catch((err: any) =>
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: err.response?.data,
+        })
+      );
+  }
 
   const tasksFiltered = useMemo(
     () =>

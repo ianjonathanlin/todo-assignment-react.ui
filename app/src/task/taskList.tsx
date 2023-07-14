@@ -20,73 +20,65 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, setLoading }) => {
   return (
     <>
       {tasks.length > 0 ? (
-        <>
-          <Accordion type="single" collapsible>
-            {tasks.map((task) => {
-              return (
-                <AccordionItem key={task.id!} value={task.id!.toString()}>
-                  <AccordionTrigger>
-                    <span
-                      style={{ fontWeight: "bold" }}
-                      className={
-                        moment().isAfter(moment(task.dueDate))
-                          ? "text-red-600 font-weight-bold"
-                          : ""
-                      }
-                    >
-                      {task.title}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p>
-                          <b>Due Date:</b>{" "}
-                          {moment(task.dueDate).format(
-                            "MMMM Do YYYY, h:mm:ss a"
-                          )}
-                        </p>
-                        <br />
-                        <p>
-                          <b>Category:</b> {task.category}
-                        </p>
-                      </div>
-                      <div className="flex justify-end">
-                        <TaskEditDialog task={task} setLoading={setLoading} />
-                        <span className="ps-2"></span>
-                        <TaskDeleteDialog task={task} setLoading={setLoading} />
-                      </div>
+        <Accordion type="single" collapsible>
+          {tasks.map((task) => {
+            return (
+              <AccordionItem key={task.id!} value={task.id!.toString()}>
+                <AccordionTrigger>
+                  <span
+                    style={{ fontWeight: "bold" }}
+                    className={
+                      moment().isAfter(moment(task.dueDate))
+                        ? "text-red-600 font-weight-bold"
+                        : ""
+                    }
+                  >
+                    {task.title}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p>
+                        <b>Due Date:</b>{" "}
+                        {moment(task.dueDate).format("MMMM Do YYYY, h:mm:ss a")}
+                      </p>
+                      <br />
+                      <p>
+                        <b>Category:</b> {task.category}
+                      </p>
                     </div>
+                    <div className="flex justify-end">
+                      <TaskEditDialog task={task} setLoading={setLoading} />
+                      <span className="ps-2"></span>
+                      <TaskDeleteDialog task={task} setLoading={setLoading} />
+                    </div>
+                  </div>
 
-                    <br />
+                  <br />
 
-                    <p>{task.description}</p>
+                  <p>{task.description}</p>
 
-                    <br />
+                  <br />
 
-                    <p>
-                      <small>
-                        <i>
-                          Created On:{" "}
-                          {moment(task.created).format(
-                            "MMMM Do YYYY, h:mm:ss a"
-                          )}
-                        </i>
-                        <br />
-                        <i>
-                          Latest Update:{" "}
-                          {moment(task.updated).format(
-                            "MMMM Do YYYY, h:mm:ss a"
-                          )}
-                        </i>
-                      </small>
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-        </>
+                  <p>
+                    <small>
+                      <i>
+                        Created On:{" "}
+                        {moment(task.created).format("MMMM Do YYYY, h:mm:ss a")}
+                      </i>
+                      <br />
+                      <i>
+                        Latest Update:{" "}
+                        {moment(task.updated).format("MMMM Do YYYY, h:mm:ss a")}
+                      </i>
+                    </small>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
       ) : (
         <div className="text-center">No todos found!</div>
       )}

@@ -75,25 +75,17 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ setLoading }) => {
 
       taskApi
         .addTask(newTask)
-        .then((response) => {
-          if (!response.ok) {
-            return response.text().then((text) => {
-              let err = new Error(text);
-              throw err;
-            });
-          }
-        })
         .then(() => {
           toast({
             description: "New task added successfully!",
           });
           setLoading(true);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",
-            description: err.message,
+            description: err.response?.data,
           });
         });
 

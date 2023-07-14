@@ -45,32 +45,23 @@ const RegisterDialog: React.FC = () => {
   async function registerUser(newUser: IUser) {
     await authApi
       .register(newUser)
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            let err = new Error(text);
-            err.status = response.status;
-            throw err;
-          });
-        }
-      })
-      .then(() => {
+      .then((res: any) => {
         toast({
           title: "New user registered!",
           description: "Please login with your credentials",
         });
       })
-      .catch((err) => {
-        if (err.status == 422) {
+      .catch((err: any) => {
+        if (err.response.status == 422) {
           toast({
             variant: "destructive",
-            description: err.message,
+            description: err.response?.data,
           });
         } else {
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",
-            description: err.message,
+            description: err.response?.data,
           });
         }
       });

@@ -51,34 +51,23 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
   async function authenticateUser(user: IUser, userName: string) {
     await authApi
       .authenticate(user)
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            let err = new Error(text);
-            err.status = response.status;
-            throw err;
-          });
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        loginUser(userName, data.authToken, data.refreshToken);
+      .then((res: any) => {
+        loginUser(userName, res.authToken, res.refreshToken);
         toast({
           description: "Login Successful!",
         });
       })
-      .catch((err) => {
-        if (err.status == 400) {
+      .catch((err: any) => {
+        if (err.response.status == 400) {
           toast({
             variant: "destructive",
-            description: err.message,
+            description: err.response?.data,
           });
         } else {
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",
-            description: err.message,
+            description: err.response?.data,
           });
         }
       });
