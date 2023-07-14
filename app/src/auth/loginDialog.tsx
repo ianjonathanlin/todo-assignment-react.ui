@@ -52,7 +52,7 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
     await authApi
       .authenticate(user)
       .then((res: any) => {
-        loginUser(userName, res.authToken, res.refreshToken);
+        loginUser(userName, res.data.authToken, res.data.refreshToken);
         toast({
           description: "Login Successful!",
         });
