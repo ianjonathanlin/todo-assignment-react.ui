@@ -1,12 +1,10 @@
-import { apiUrl, handleResponse, handleError } from "./apiUtils";
+import { apiUrl } from "./env";
 import { ITask } from "../models/task";
 
 const baseUrl = apiUrl + "Task/";
 
 export function getTasks() {
-  return fetch(baseUrl, { method: "GET" })
-    .then(handleResponse)
-    .catch(handleError);
+  return fetch(baseUrl, { method: "GET" });
 }
 
 export function addTask(task: ITask) {
@@ -14,7 +12,7 @@ export function addTask(task: ITask) {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(task),
-  }).catch(handleError);
+  });
 }
 
 export function editTask(task: ITask) {
@@ -22,9 +20,9 @@ export function editTask(task: ITask) {
     method: "PUT",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(task),
-  }).catch(handleError);
+  });
 }
 
 export function deleteTask(taskId: number) {
-  return fetch(baseUrl + taskId, { method: "DELETE" }).catch(handleError);
+  return fetch(baseUrl + taskId, { method: "DELETE" });
 }

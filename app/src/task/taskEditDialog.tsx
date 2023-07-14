@@ -80,18 +80,25 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({
 
       taskApi
         .editTask(editedTask)
+        .then((response) => {
+          if (!response.ok) {
+            return response.text().then((text) => {
+              let err = new Error(text);
+              throw err;
+            });
+          }
+        })
         .then(() => {
           toast({
-            description: "Task updated successfully",
+            description: "Task updated successfully!",
           });
           setLoading(true);
         })
         .catch((err) => {
-          console.log(err);
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",
-            description: "There was a problem with your request.",
+            description: err.message,
           });
         });
 
