@@ -78,7 +78,7 @@ export default function Main() {
                 }}
               />
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                   <Button variant="outline">Sort</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
