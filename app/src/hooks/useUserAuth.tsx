@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-export default function useUserAuth() {
+export type UseUserAuthType = [
+  isLogin: boolean,
+  username: string,
+  loginUser: Function,
+  logoutUser: Function
+];
+
+export function useUserAuth() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
 
@@ -14,6 +21,7 @@ export default function useUserAuth() {
 
   const logoutUser = () => {
     localStorage.clear();
+
     setIsLogin(false);
     setUsername("");
   };

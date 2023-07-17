@@ -48,8 +48,8 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
     },
   });
 
-  async function authenticateUser(user: IUser, userName: string) {
-    await authApi
+  function authenticateUser(user: IUser, userName: string) {
+    authApi
       .authenticate(user)
       .then((res: any) => {
         loginUser(userName, res.data.authToken, res.data.refreshToken);
@@ -83,7 +83,6 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>
-          <DialogDescription>Not implemented yet</DialogDescription>
         </DialogHeader>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 py-4">

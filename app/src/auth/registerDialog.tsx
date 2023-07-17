@@ -3,6 +3,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -42,8 +43,8 @@ const RegisterDialog: React.FC = () => {
     },
   });
 
-  async function registerUser(newUser: IUser) {
-    await authApi
+  function registerUser(newUser: IUser) {
+    authApi
       .register(newUser)
       .then((res: any) => {
         toast({
@@ -75,6 +76,7 @@ const RegisterDialog: React.FC = () => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Register</DialogTitle>
+          <DialogDescription>Create a new account.</DialogDescription>
         </DialogHeader>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 py-4">

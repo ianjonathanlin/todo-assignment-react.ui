@@ -1,6 +1,6 @@
 "use client";
 
-import { UserProvider } from "./src/context/UserContext";
+import { UserProvider } from "./src/contexts/UserContext";
 import Header from "./src/header";
 import Main from "./src/main";
 import { Toaster } from "@/components/ui/toaster";
