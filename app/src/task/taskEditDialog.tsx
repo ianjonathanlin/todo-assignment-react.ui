@@ -80,7 +80,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({
 
       taskApi
         .editTask(editedTask)
-        .then((res: any) => {
+        .then(() => {
           toast({
             description: "Task updated successfully!",
           });

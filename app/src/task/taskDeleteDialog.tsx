@@ -58,7 +58,7 @@ const TaskDeleteDialog: React.FC<TaskDeleteDialogProps> = ({
               onClick={() => {
                 taskApi
                   .deleteTask(task.id!)
-                  .then((res: any) => {
+                  .then(() => {
                     toast({
                       description: "Task deleted successfully!",
                     });

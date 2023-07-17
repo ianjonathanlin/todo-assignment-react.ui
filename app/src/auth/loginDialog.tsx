@@ -76,7 +76,7 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="outline bg-white text-black hover:bg-black hover:outline-white hover:text-white">
+        <Button>
           <LogIn className="h-4 w-4 mr-1" /> Login
         </Button>
       </DialogTrigger>
