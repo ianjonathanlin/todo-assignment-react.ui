@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useContext, useReducer } from "react";
-import { UserContext } from "./contexts/UserContext";
+import { AuthContext } from "./contexts/AuthContext";
 import TaskList from "./task/taskList";
 import TaskAddDialog from "./task/taskAddDialog";
 import TaskSortReducer from "./reducers/taskSortReducer";
@@ -18,20 +18,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import jwtDecode from "jwt-decode";
 
 export default function Main() {
   const initialState = { tasks: [], sortedType: "" };
 
   const [loading, setLoading] = useState<Boolean>(false);
   const [searchFilter, setSearchFilter] = useState<string>("");
-  const [isLogin] = useContext(UserContext);
+  const [isLogin] = useContext(AuthContext);
   const [sortFilter, setSortFilter] = useState("sortTasksByDefault");
   const [state, dispatch] = useReducer(TaskSortReducer, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (isLogin) {
-      setLoading(true);
+    if (isLogin) getTasks();
+  }, [isLogin]);
+
+  const getTasks = () => {
+    setLoading(true);
+    // timeout to show the spinner
+    setTimeout(() => {
       taskApi
         .getTasks()
         .then((res: any) => {
@@ -46,9 +52,13 @@ export default function Main() {
             description: err.response?.data,
           });
         });
-    }
-    setLoading(false);
-  }, [loading, isLogin]);
+    }, 3000);
+  };
+
+  const sortTasks = (sortType: string) => {
+    setSortFilter(sortType);
+    dispatch({ type: sortType, tasks: state.tasks });
+  };
 
   const tasksFiltered = state.tasks.filter((task: ITask) => {
     return (
@@ -57,11 +67,6 @@ export default function Main() {
       task.category.toLowerCase().includes(searchFilter.toLowerCase())
     );
   });
-
-  const sortTasks = (sortType: string) => {
-    setSortFilter(sortType);
-    dispatch({ type: sortType, tasks: state.tasks });
-  };
 
   return (
     <>
@@ -107,12 +112,12 @@ export default function Main() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <TaskAddDialog setLoading={setLoading} />
+            <TaskAddDialog getTasks={getTasks} />
           </div>
           {loading ? (
             <Spinner />
           ) : (
-            <TaskList tasks={tasksFiltered} setLoading={setLoading} />
+            <TaskList tasks={tasksFiltered} getTasks={getTasks} />
           )}
         </div>
       ) : (

@@ -1,13 +1,14 @@
 import { useState } from "react";
+import jwtDecode from "jwt-decode";
 
-export type UseUserAuthType = [
+export type UseAuthType = [
   isLogin: boolean,
   username: string,
   loginUser: Function,
   logoutUser: Function
 ];
 
-export function useUserAuth() {
+export function useAuth() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
 
@@ -15,12 +16,14 @@ export function useUserAuth() {
     localStorage.clear();
   }
 
-  const loginUser = (name: string, authToken: string, refreshToken: string) => {
+  const loginUser = (authToken: string, refreshToken: string) => {
     localStorage.setItem("authToken", authToken);
     localStorage.setItem("refreshToken", refreshToken);
 
+    const jwtToken: any = jwtDecode(authToken);
+
     setIsLogin(!isLogin);
-    setUsername(name);
+    setUsername(jwtToken.userName);
   };
 
   const logoutUser = () => {

@@ -39,13 +39,10 @@ import { ITask } from "@/app/models/task";
 
 interface TaskEditDialogProps {
   task: ITask;
-  setLoading: Function;
+  getTasks: Function;
 }
 
-const TaskEditDialog: React.FC<TaskEditDialogProps> = ({
-  task,
-  setLoading,
-}) => {
+const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, getTasks }) => {
   const [dueDate, setDueDate] = useState<Date | undefined>(
     moment(task.dueDate).startOf("day").toDate()
   );
@@ -84,7 +81,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({
           toast({
             description: "Task updated successfully!",
           });
-          setLoading(true);
+          getTasks();
         })
         .catch((err: any) => {
           toast({

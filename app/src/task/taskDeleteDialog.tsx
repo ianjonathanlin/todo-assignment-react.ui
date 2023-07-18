@@ -19,12 +19,12 @@ import * as taskApi from "../../api/taskApi";
 
 interface TaskDeleteDialogProps {
   task: ITask;
-  setLoading: Function;
+  getTasks: Function;
 }
 
 const TaskDeleteDialog: React.FC<TaskDeleteDialogProps> = ({
   task,
-  setLoading,
+  getTasks,
 }) => {
   const { toast } = useToast();
 
@@ -62,7 +62,7 @@ const TaskDeleteDialog: React.FC<TaskDeleteDialogProps> = ({
                     toast({
                       description: "Task deleted successfully!",
                     });
-                    setLoading(true);
+                    getTasks();
                   })
                   .catch((err: any) => {
                     toast({

@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import LoginDialog from "./auth/loginDialog";
 import RegisterDialog from "./auth/registerDialog";
-import { UserContext } from "./contexts/UserContext";
+import { AuthContext } from "./contexts/AuthContext";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,7 @@ import { LogOut, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 const Header: React.FC = () => {
-  const [isLogin, username, loginUser, logoutUser] = useContext(UserContext);
+  const [isLogin, username, loginUser, logoutUser] = useContext(AuthContext);
   const { setTheme } = useTheme();
 
   return (

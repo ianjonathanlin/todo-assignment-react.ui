@@ -13,10 +13,10 @@ import TaskDeleteDialog from "./taskDeleteDialog";
 
 interface TaskListProps {
   tasks: ITask[];
-  setLoading: Function;
+  getTasks: Function;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, setLoading }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, getTasks }) => {
   return (
     <>
       {tasks.length > 0 ? (
@@ -49,9 +49,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, setLoading }) => {
                       </p>
                     </div>
                     <div className="flex justify-end">
-                      <TaskEditDialog task={task} setLoading={setLoading} />
+                      <TaskEditDialog task={task} getTasks={getTasks} />
                       <span className="ps-2"></span>
-                      <TaskDeleteDialog task={task} setLoading={setLoading} />
+                      <TaskDeleteDialog task={task} getTasks={getTasks} />
                     </div>
                   </div>
 

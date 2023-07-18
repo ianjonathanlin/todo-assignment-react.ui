@@ -38,10 +38,10 @@ import * as taskApi from "../../api/taskApi";
 import { ITask } from "@/app/models/task";
 
 interface TaskAddDialogProps {
-  setLoading: Function;
+  getTasks: Function;
 }
 
-const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ setLoading }) => {
+const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
   const [dueDate, setDueDate] = useState<Date | undefined>(
     moment().startOf("day").toDate()
   );
@@ -79,7 +79,7 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ setLoading }) => {
           toast({
             description: "New task added successfully!",
           });
-          setLoading(true);
+          getTasks();
         })
         .catch((err: any) => {
           toast({

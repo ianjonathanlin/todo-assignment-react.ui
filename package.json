@@ -30,6 +30,7 @@
     "eslint": "8.44.0",
     "eslint-config-next": "^13.4.10",
     "formik": "^2.4.2",
+    "jwt-decode": "^3.1.2",
     "lucide-react": "^0.259.0",
     "moment": "^2.29.4",
     "next": "^13.4.10",
