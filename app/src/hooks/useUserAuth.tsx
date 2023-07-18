@@ -11,6 +11,10 @@ export function useUserAuth() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
 
+  if (!isLogin) {
+    localStorage.clear();
+  }
+
   const loginUser = (name: string, authToken: string, refreshToken: string) => {
     localStorage.setItem("authToken", authToken);
     localStorage.setItem("refreshToken", refreshToken);

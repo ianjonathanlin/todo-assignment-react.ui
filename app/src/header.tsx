@@ -46,7 +46,7 @@ const Header: React.FC = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {isLogin && username != "" ? (
+            {isLogin ? (
               <div className="flex items-center space-x-4">
                 <h2 className="text-lg font-semibold">Hello, {username}!</h2>
                 <Button className="outline" onClick={() => logoutUser()}>
