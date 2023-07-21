@@ -28,7 +28,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
 import { Pencil, Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { addDays, format } from "date-fns";
@@ -36,6 +35,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ITask } from "@/app/models/task";
 import useAxios from "../hooks/useAxios";
+import { toast } from "react-toastify";
 
 interface TaskEditDialogProps {
   task: ITask;
@@ -47,7 +47,6 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, getTasks }) => {
     moment(task.dueDate).startOf("day").toDate()
   );
   const api = useAxios();
-  const { toast } = useToast();
 
   const formik = useFormik({
     initialValues: {
@@ -79,16 +78,14 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, getTasks }) => {
       api
         .put(`Task/${editedTask.id}`, editedTask)
         .then(() => {
-          toast({
-            description: "Task updated successfully!",
+          toast.success("Task updated successfully!", {
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
           getTasks();
         })
         .catch((err: any) => {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: err.response?.data,
+          toast.error(err.response?.data, {
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         });
 

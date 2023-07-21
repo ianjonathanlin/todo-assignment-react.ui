@@ -7,7 +7,6 @@ import { ITask } from "../models/task";
 import Spinner from "@/lib/Spinner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useAxios from "./hooks/useAxios";
+import { toast } from "react-toastify";
 
 export default function Main() {
   const initialState = { tasks: [], sortedType: "" };
@@ -28,7 +28,6 @@ export default function Main() {
   const [sortFilter, setSortFilter] = useState<string>("sortTasksByDefault");
   const [state, dispatch] = useReducer(TaskSortReducer, initialState);
   const api = useAxios();
-  const { toast } = useToast();
 
   useEffect(() => {
     if (isLogin) getTasks();
@@ -46,10 +45,8 @@ export default function Main() {
         })
         .catch((err: any) => {
           setLoading(false);
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: err.response?.data,
+          toast.error(err.response?.data, {
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         });
     }, 3000);

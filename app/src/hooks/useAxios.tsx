@@ -2,16 +2,15 @@ import { useContext } from "react";
 import { IAuthToken } from "@/app/models/authToken";
 import { AuthContext } from "../contexts/AuthContext";
 import { apiUrl } from "../utils/env";
-import { useToast } from "@/components/ui/use-toast";
 import moment from "moment";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-toastify";
 
 const baseURL = apiUrl;
 
 const useAxios = () => {
   const [isLogin, username, loginUser, logoutUser] = useContext(AuthContext);
-  const { toast } = useToast();
 
   let tokens = localStorage.getItem("tokens")
     ? JSON.parse(localStorage.getItem("tokens")!)
@@ -24,10 +23,9 @@ const useAxios = () => {
 
   function invalidTokenAction() {
     logoutUser();
-    toast({
-      variant: "destructive",
-      title: "Invalid session.",
-      description: "Sorry, please login again.",
+    toast.dismiss();
+    toast.error("Session expired, please login again.", {
+      position: toast.POSITION.BOTTOM_RIGHT,
     });
   }
 

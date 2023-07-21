@@ -13,15 +13,13 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import * as authApi from "../utils/authApi";
 import { IUser } from "@/app/models/user";
+import { toast } from "react-toastify";
 
 const RegisterDialog: React.FC = () => {
-  const { toast } = useToast();
-
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -47,24 +45,14 @@ const RegisterDialog: React.FC = () => {
     authApi
       .register(newUser)
       .then((res: any) => {
-        toast({
-          title: "New user registered!",
-          description: "Please login with your credentials",
+        toast.success("New user registered!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
         });
       })
       .catch((err: any) => {
-        if (err.response.status == 422) {
-          toast({
-            variant: "destructive",
-            description: err.response?.data,
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: err.response?.data,
-          });
-        }
+        toast.error(err.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   }
 

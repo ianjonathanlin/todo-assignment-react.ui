@@ -13,20 +13,18 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
 import { LogIn } from "lucide-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import * as authApi from "../utils/authApi";
 import { IUser } from "@/app/models/user";
+import { toast } from "react-toastify";
 
 interface LoginDialogProps {
   loginUser: Function;
 }
 
 const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
-  const { toast } = useToast();
-
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -42,34 +40,25 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ loginUser }) => {
         password: values.password,
       };
 
-      authenticateUser(userToAuth, values.userName);
+      authenticateUser(userToAuth);
 
       formik.resetForm();
     },
   });
 
-  function authenticateUser(user: IUser, userName: string) {
+  function authenticateUser(user: IUser) {
     authApi
       .authenticate(user)
       .then((res: any) => {
         loginUser(res.data.authToken, res.data.refreshToken);
-        toast({
-          description: "Login Successful!",
+        toast.success("Login Successful!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
         });
       })
       .catch((err: any) => {
-        if (err.response.status == 400) {
-          toast({
-            variant: "destructive",
-            description: err.response?.data,
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: err.response?.data,
-          });
-        }
+        toast.error(err.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   }
 

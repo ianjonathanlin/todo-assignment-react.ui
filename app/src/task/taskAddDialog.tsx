@@ -28,7 +28,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
 import { PlusSquare, Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { addDays, format } from "date-fns";
@@ -36,6 +35,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ITask } from "@/app/models/task";
 import useAxios from "../hooks/useAxios";
+import { toast } from "react-toastify";
 
 interface TaskAddDialogProps {
   getTasks: Function;
@@ -46,7 +46,6 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
     moment().startOf("day").toDate()
   );
   const api = useAxios();
-  const { toast } = useToast();
 
   const formik = useFormik({
     initialValues: {
@@ -77,16 +76,14 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
       api
         .post("Task/", newTask)
         .then(() => {
-          toast({
-            description: "New task added successfully!",
+          toast.success("New task added successfully!", {
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
           getTasks();
         })
         .catch((err: any) => {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: err.response?.data,
+          toast.error(err.response?.data, {
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         });
 
