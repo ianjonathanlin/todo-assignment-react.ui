@@ -34,8 +34,8 @@ import { cn } from "@/lib/utils";
 import { addDays, format } from "date-fns";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import * as taskApi from "../../api/taskApi";
 import { ITask } from "@/app/models/task";
+import useAxios from "../hooks/useAxios";
 
 interface TaskAddDialogProps {
   getTasks: Function;
@@ -45,6 +45,7 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
   const [dueDate, setDueDate] = useState<Date | undefined>(
     moment().startOf("day").toDate()
   );
+  const api = useAxios();
   const { toast } = useToast();
 
   const formik = useFormik({
@@ -73,8 +74,8 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
         dueDate: values.dueDate,
       };
 
-      taskApi
-        .addTask(newTask)
+      api
+        .post("Task/", newTask)
         .then(() => {
           toast({
             description: "New task added successfully!",

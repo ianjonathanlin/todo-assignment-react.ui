@@ -15,7 +15,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Trash2 } from "lucide-react";
-import * as taskApi from "../../api/taskApi";
+import useAxios from "../hooks/useAxios";
 
 interface TaskDeleteDialogProps {
   task: ITask;
@@ -26,6 +26,7 @@ const TaskDeleteDialog: React.FC<TaskDeleteDialogProps> = ({
   task,
   getTasks,
 }) => {
+  const api = useAxios();
   const { toast } = useToast();
 
   return (
@@ -56,8 +57,8 @@ const TaskDeleteDialog: React.FC<TaskDeleteDialogProps> = ({
               variant="destructive"
               type="submit"
               onClick={() => {
-                taskApi
-                  .deleteTask(task.id!)
+                api
+                  .delete(`Task/${task.id}`)
                   .then(() => {
                     toast({
                       description: "Task deleted successfully!",

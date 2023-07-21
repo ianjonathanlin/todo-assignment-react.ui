@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import * as authApi from "../../api/authApi";
+import * as authApi from "../utils/authApi";
 import { IUser } from "@/app/models/user";
 
 const RegisterDialog: React.FC = () => {

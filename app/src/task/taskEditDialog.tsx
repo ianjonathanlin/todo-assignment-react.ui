@@ -34,8 +34,8 @@ import { cn } from "@/lib/utils";
 import { addDays, format } from "date-fns";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import * as taskApi from "../../api/taskApi";
 import { ITask } from "@/app/models/task";
+import useAxios from "../hooks/useAxios";
 
 interface TaskEditDialogProps {
   task: ITask;
@@ -46,6 +46,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, getTasks }) => {
   const [dueDate, setDueDate] = useState<Date | undefined>(
     moment(task.dueDate).startOf("day").toDate()
   );
+  const api = useAxios();
   const { toast } = useToast();
 
   const formik = useFormik({
@@ -75,8 +76,8 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, getTasks }) => {
         dueDate: values.dueDate,
       };
 
-      taskApi
-        .editTask(editedTask)
+      api
+        .put(`Task/${editedTask.id}`, editedTask)
         .then(() => {
           toast({
             description: "Task updated successfully!",

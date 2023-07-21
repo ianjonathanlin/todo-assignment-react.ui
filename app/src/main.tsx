@@ -4,7 +4,6 @@ import TaskList from "./task/taskList";
 import TaskAddDialog from "./task/taskAddDialog";
 import TaskSortReducer from "./reducers/taskSortReducer";
 import { ITask } from "../models/task";
-import * as taskApi from "../api/taskApi";
 import Spinner from "@/lib/Spinner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import jwtDecode from "jwt-decode";
+import useAxios from "./hooks/useAxios";
 
 export default function Main() {
   const initialState = { tasks: [], sortedType: "" };
@@ -26,8 +25,9 @@ export default function Main() {
   const [loading, setLoading] = useState<Boolean>(false);
   const [searchFilter, setSearchFilter] = useState<string>("");
   const [isLogin] = useContext(AuthContext);
-  const [sortFilter, setSortFilter] = useState("sortTasksByDefault");
+  const [sortFilter, setSortFilter] = useState<string>("sortTasksByDefault");
   const [state, dispatch] = useReducer(TaskSortReducer, initialState);
+  const api = useAxios();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function Main() {
     setLoading(true);
     // timeout to show the spinner
     setTimeout(() => {
-      taskApi
-        .getTasks()
+      api
+        .get("Task/")
         .then((res: any) => {
           dispatch({ type: "sortTasksByDefault", tasks: res.data });
           setLoading(false);
