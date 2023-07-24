@@ -35,6 +35,7 @@ export default function Main() {
 
   const getTasks = () => {
     setLoading(true);
+    setSearchFilter("");
     // timeout to show the spinner
     setTimeout(() => {
       api
@@ -49,7 +50,7 @@ export default function Main() {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
         });
-    }, 3000);
+    }, 2000);
   };
 
   const sortTasks = (sortType: string) => {

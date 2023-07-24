@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { IAuthToken } from "@/app/models/authToken";
 import jwtDecode from "jwt-decode";
