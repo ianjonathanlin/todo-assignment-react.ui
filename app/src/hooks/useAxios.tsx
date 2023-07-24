@@ -14,9 +14,10 @@ const baseURL = apiUrl;
 const useAxios = () => {
   const [isLogin, username, loginUser, logoutUser] = useContext(AuthContext);
 
-  let tokens = localStorage.getItem("tokens")
-    ? JSON.parse(localStorage.getItem("tokens")!)
-    : null;
+  let tokens =
+    typeof window !== "undefined" && localStorage.getItem("tokens")
+      ? JSON.parse(localStorage.getItem("tokens")!)
+      : null;
 
   const axiosInstance = axios.create({
     baseURL,
@@ -33,9 +34,10 @@ const useAxios = () => {
 
   axiosInstance.interceptors.request.use(async (req) => {
     // fetch new tokens
-    tokens = localStorage.getItem("tokens")
-      ? JSON.parse(localStorage.getItem("tokens")!)
-      : null;
+    tokens =
+      typeof window !== "undefined" && localStorage.getItem("tokens")
+        ? JSON.parse(localStorage.getItem("tokens")!)
+        : null;
 
     // terminate user session when no tokens are found
     if (!tokens) {

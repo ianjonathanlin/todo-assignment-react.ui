@@ -17,6 +17,10 @@ export function useAuth() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    checkExistingTokenValidity();
+  }, []);
+
+  function checkExistingTokenValidity() {
     let tokens = localStorage.getItem("tokens")
       ? JSON.parse(localStorage.getItem("tokens")!)
       : null;
@@ -40,7 +44,7 @@ export function useAuth() {
       // clear everything (logout) if no tokens are persisted
       logoutUser();
     }
-  }, []);
+  }
 
   const loginUser = (authToken: string, refreshToken: string) => {
     const newTokens: IAuthToken = {
