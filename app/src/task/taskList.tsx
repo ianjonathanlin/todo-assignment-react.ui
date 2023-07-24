@@ -28,8 +28,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, getTasks }) => {
                   <span
                     style={{ fontWeight: "bold" }}
                     className={
-                      moment().isAfter(moment(task.dueDate))
+                      moment().isAfter(moment(task.dueDate), "date")
                         ? "text-red-600 font-weight-bold"
+                        : moment().isSame(moment(task.dueDate), "date")
+                        ? "text-yellow-500 font-weight-bold"
                         : ""
                     }
                   >

@@ -94,7 +94,7 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="max-w-lg">
           <PlusSquare className="mr-2 h-4 w-4" /> Add new task
         </Button>
       </DialogTrigger>

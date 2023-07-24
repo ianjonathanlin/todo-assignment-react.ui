@@ -29,8 +29,8 @@ export default function TaskSortReducer(
         a: ITask,
         b: ITask
       ) {
-        let x = a.category.toLowerCase();
-        let y = b.category.toLowerCase();
+        let x = a.title.toLowerCase();
+        let y = b.title.toLowerCase();
         if (x < y) {
           return -1;
         }
