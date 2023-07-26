@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useContext, useReducer } from "react";
 import { AuthContext } from "./contexts/AuthContext";
-import TaskList from "./task/taskList";
-import TaskAddDialog from "./task/taskAddDialog";
+import TaskList from "./tasks/taskList";
+import TaskAddDialog from "./tasks/taskAddDialog";
 import TaskSortReducer from "./reducers/taskSortReducer";
 import { ITask } from "../models/task";
 import Spinner from "@/lib/Spinner";
