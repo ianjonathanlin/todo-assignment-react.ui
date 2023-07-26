@@ -63,8 +63,11 @@ const TaskAddDialog: React.FC<TaskAddDialogProps> = ({ getTasks }) => {
         .required("Required"),
     }),
     onSubmit: (values) => {
-      if (dueDate) values.dueDate = dueDate!.toISOString();
-      else values.dueDate = moment().startOf("day").toISOString();
+      if (dueDate) {
+        values.dueDate = new Date(dueDate!).toISOString();
+      } else {
+        values.dueDate = moment().startOf("day").toISOString();
+      }
 
       const newTask: ITask = {
         title: values.title,

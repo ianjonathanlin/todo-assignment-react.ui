@@ -66,13 +66,12 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, getTasks }) => {
                   <p>
                     <small>
                       <i>
-                        Created On:{" "}
-                        {moment(task.created).format("MMMM Do YYYY, h:mm:ss a")}
+                        Created On: {moment(task.created).format("D/MM/YYYY")}
                       </i>
                       <br />
                       <i>
                         Latest Update:{" "}
-                        {moment(task.updated).format("MMMM Do YYYY, h:mm:ss a")}
+                        {moment(task.updated).format("D/MM/YYYY")}
                       </i>
                     </small>
                   </p>
