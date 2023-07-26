@@ -43,7 +43,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, getTasks }) => {
                     <div>
                       <p>
                         <b>Due Date:</b>{" "}
-                        {moment(task.dueDate).format("MMMM Do YYYY, h:mm:ss a")}
+                        {moment(task.dueDate).format("MMMM Do YYYY")}
                       </p>
                       <br />
                       <p>
