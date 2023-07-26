@@ -46,8 +46,7 @@ const TaskDeleteDialog: React.FC<TaskDeleteDialogProps> = ({
             <br />
             Category: <b>{task.category}</b>
             <br />
-            Due Date:{" "}
-            <b>{moment(task.dueDate).format("MMMM Do YYYY, h:mm:ss a")}</b>
+            Due Date: <b>{moment(task.dueDate).format("D/MM/YYYY")}</b>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
